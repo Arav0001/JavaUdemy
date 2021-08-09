@@ -1,9 +1,24 @@
 import java.util.List;
 import java.util.Scanner;
 
-public class Main {
+public class Main implements Runnable {
 
     public static void main(String[] args) {
+
+        Thread thread = new Thread(new Main());
+        thread.start();
+
+        try {
+
+            Thread.sleep(5000);
+            thread.interrupt();
+        } catch (InterruptedException ex) {
+
+            System.out.println("Thread Interrupted");
+        }
+    }
+
+    public void run() {
 
         Scanner sc = new Scanner(System.in);
 
