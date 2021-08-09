@@ -2,7 +2,7 @@
   <artifact type="jar" name="PrimesList:jar">
     <output-path>$PROJECT_DIR$/out/artifacts/PrimesList_jar</output-path>
     <root id="archive" name="PrimesList.jar">
-      <element id="module-output" name="PrimesList(Windows)" />
+      <element id="module-output" name="PrimesList(Win)" />
     </root>
   </artifact>
 </component>
