@@ -11,7 +11,13 @@ public class Main {
         int n = sc.nextInt();
         System.out.println();
 
+        long timerStart = System.currentTimeMillis();
         List<String> list = PrimeList.listPrimes(n);
+        long timerEnd = System.currentTimeMillis();
+        long elapsed = timerEnd - timerStart;
+
+        System.out.println();
+        System.out.println("Elapsed time to display " + n + " primes: " + elapsed + " milliseconds");
         System.out.println();
 
         System.out.println("Would you like to write this data to a file in your Downloads folder? [true] / [false]");
@@ -22,9 +28,9 @@ public class Main {
 
             String fileName = n + " consecutive primes";
             FileOperator.writeToFile(getDataFromList(list), FileOperator.createFile(fileName));
+            System.out.println();
         }
 
-        System.out.println();
         System.out.println("System closed");
     }
 
