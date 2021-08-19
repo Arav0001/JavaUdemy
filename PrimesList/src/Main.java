@@ -1,24 +1,9 @@
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
+import java.lang.Math;
 
-public class Main implements Runnable {
+public class Main {
 
     public static void main(String[] args) {
-
-        Thread thread = new Thread(new Main());
-        thread.start();
-
-        try {
-
-            Thread.sleep(5000);
-            thread.interrupt();
-        } catch (InterruptedException ex) {
-
-            System.out.println("Thread Interrupted");
-        }
-    }
-
-    public void run() {
 
         Scanner sc = new Scanner(System.in);
 
@@ -26,16 +11,56 @@ public class Main implements Runnable {
         int n = sc.nextInt();
         System.out.println();
 
-        long timerStart = System.currentTimeMillis();
-        List<String> list = PrimeList.listPrimes(n);
-        long timerEnd = System.currentTimeMillis();
-        long elapsed = timerEnd - timerStart;
-
-        System.out.println();
-        System.out.println("Elapsed time to display " + n + " primes: " + elapsed + " milliseconds");
+        System.out.println("Would you like to print the " + n + " consecutive primes to the console? [true] / [false]");
+        boolean doPrint = sc.nextBoolean();
         System.out.println();
 
-        System.out.println("Would you like to write this data to a file in your Downloads folder? [true] / [false]");
+        PrimeList primeList = new PrimeList(doPrint);
+        List<String> list;
+
+        long timerStart = getNanoTime();
+        System.out.println(timerStart);
+
+        if (doPrint) {
+
+            list = primeList.printListPrimes(n);
+        } else {
+
+            list = primeList.dontPrintListPrimes(n);
+        }
+
+        long timerEnd = getNanoTime();
+        System.out.println(timerEnd);
+        long elapsedNano = timerEnd - timerStart;
+
+        if (elapsedNano >= 0 && elapsedNano < Math.pow(10, 6)) {
+
+            System.out.println();
+            System.out.println("Elapsed time to process was " + elapsedNano + " nanoseconds.");
+            System.out.println();
+        } else if (elapsedNano >= Math.pow(10, 6) && elapsedNano < Math.pow(10, 9)) {
+
+            System.out.println();
+            System.out.println("Elapsed time to process was " + (elapsedNano / Math.pow(10, 6)) + " milliseconds.");
+            System.out.println();
+        } else if (elapsedNano >= Math.pow(10, 9) && elapsedNano < 60 * Math.pow(10, 9)) {
+
+            System.out.println();
+            System.out.println("Elapsed time to process was " + (elapsedNano / Math.pow(10, 9)) + " seconds.");
+            System.out.println();
+        } else if (elapsedNano >= 60 * Math.pow(10, 9)) {
+
+            System.out.println();
+            System.out.println("Elapsed time to process was " + (elapsedNano / (60 * Math.pow(10, 9))) + " minutes.");
+            System.out.println();
+        } else {
+
+            System.out.println();
+            System.out.println("Error");
+            System.out.println();
+        }
+
+        System.out.println("Would you like to write these primes to a file in your Downloads folder? [true] / [false]");
         boolean doWrite = sc.nextBoolean();
         System.out.println();
 
@@ -46,10 +71,10 @@ public class Main implements Runnable {
             System.out.println();
         }
 
-        System.out.println("System closed");
+        System.out.println("System Closed");
     }
 
-    public static String getDataFromList(List<String> list) {
+    private static String getDataFromList(List<String> list) {
 
         StringBuilder rawData = new StringBuilder();
 
@@ -59,5 +84,10 @@ public class Main implements Runnable {
         }
 
         return rawData.toString();
+    }
+
+    private static long getNanoTime() {
+
+        return System.nanoTime();
     }
 }

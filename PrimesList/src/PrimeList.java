@@ -3,7 +3,14 @@ import java.util.List;
 
 public class PrimeList {
 
-    public static List<String> listPrimes(int n) {
+    private boolean doPrint;
+
+    public PrimeList(boolean doPrint) {
+
+        this.doPrint = doPrint;
+    }
+
+    public List<String> printListPrimes(int n) {
 
         int count = 0;
         int i = 2;
@@ -16,6 +23,29 @@ public class PrimeList {
 
                 String text = "#" + (count + 1) + ": " + i;
                 System.out.println(text);
+
+                primesList.add(text);
+                count++;
+            }
+
+            i++;
+        }
+
+        return primesList;
+    }
+
+    public List<String> dontPrintListPrimes(int n) {
+
+        int count = 0;
+        int i = 2;
+
+        List<String> primesList = new ArrayList<>();
+
+        while (count != n && n > 1) {
+
+            if (isPrime(i)) {
+
+                String text = "#" + (count + 1) + ": " + i;
 
                 primesList.add(text);
                 count++;
